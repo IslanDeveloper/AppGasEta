@@ -1,6 +1,7 @@
 package com.softworldtechnologies.appgaseta.view;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -23,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     Button buttonSalvar;
     Button buttonFinalizar;
 
+    double precoGasolina;
+    double precoEtanol;
+    String recomendacao;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate ( savedInstanceState );
@@ -39,11 +44,33 @@ public class MainActivity extends AppCompatActivity {
         buttonFinalizar = findViewById ( R.id.button_finalizar );
 
         buttonCalcular.setOnClickListener ( v -> {
+            boolean isDadosOk = true;
 
+            if(TextUtils.isEmpty ( editGasolina.getText () )){
+                editGasolina.setError ( "Campo obrigatório" );
+                editGasolina.requestFocus ();
+                isDadosOk = false;
+            }
+
+            if(TextUtils.isEmpty ( editEtanol.getText () )){
+                editEtanol.setError ( "Campo obrigatório" );
+                editEtanol.requestFocus ();
+                isDadosOk = false;
+            }
+
+            if(isDadosOk){
+                precoGasolina = Double.parseDouble (editGasolina.getText ().toString () );
+                precoEtanol = Double.parseDouble ( editEtanol.getText ().toString () );
+                recomendacao = UtilGasEta.calcularMelhorOpcao (precoGasolina, precoEtanol );
+                textResultado.setText ( recomendacao );
+            } else {
+                Toast.makeText ( this, "Digite os campos obrigatórios", Toast.LENGTH_SHORT ).show ( );
+            }
         } );
 
         buttonLimpar.setOnClickListener ( v -> {
-
+            editGasolina.setText ( "" );
+            editEtanol.setText ( "" );
         } );
 
         buttonSalvar.setOnClickListener ( v -> {
