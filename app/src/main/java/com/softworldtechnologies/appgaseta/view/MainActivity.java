@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.softworldtechnologies.appgaseta.R;
 import com.softworldtechnologies.appgaseta.apoio.UtilGasEta;
+import com.softworldtechnologies.appgaseta.database.GasEtaDB;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,5 +81,7 @@ public class MainActivity extends AppCompatActivity {
         buttonFinalizar.setOnClickListener ( v -> finishAffinity ( ) );
 
         Toast.makeText ( this, UtilGasEta.calcularMelhorOpcao ( 5.12, 3.99 ), Toast.LENGTH_SHORT ).show ( );
+
+        GasEtaDB db = new GasEtaDB ( MainActivity.this );
     }
 }
